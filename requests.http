@@ -1,0 +1,9 @@
+@baseUrl=http://localhost:8080/api
+
+
+GET {{baseUrl}}/courses
+
+###
+GET {{baseUrl}}/courses/3
+
+
