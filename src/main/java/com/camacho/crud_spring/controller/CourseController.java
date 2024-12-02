@@ -15,9 +15,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -51,5 +53,16 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             courseRepository.save(course)
             );
+    }
+
+    @PutMapping("/{id}")
+    public Course update(@PathVariable Long id, @RequestBody Course course){
+        Course c = courseRepository.findById(id).orElse(null);
+        if(c == null){
+            throw new RuntimeException("Curso não encontrado na base de dados");
+        }
+        c.setName(course.getName());
+        c.setCategory(course.getCategory());
+        return courseRepository.save(c);
     }
 }
